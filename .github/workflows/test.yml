@@ -31,11 +31,16 @@ jobs:
           older-than: 1 # days
           keep-last: 0
           untagged: true
+      
+      # get the branch name that triggered the action
+      - name: Git branch name
+        uses: EthanSK/git-branch-name-action@v1
+      # output is env.GIT_BRANCH_NAME
 
       # run the action
       - name: Run publish-docker
         id: run-publish-docker
-        uses: lucenelletenebre/publish-docker@${{ github.ref_name }}
+        uses: lucenelletenebre/publish-docker@${{ env.GIT_BRANCH_NAME }}
         with:
           docker-context: ./test
           username: ${{ github.repository_owner }}
