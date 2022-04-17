@@ -54,8 +54,8 @@ runs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ username }}
-          password: ${{ password }}
+          username: ${{ inputs.username }}
+          password: ${{ inputs.password }}
       
       - name: Build and push docker immage
         uses: docker/build-push-action@v2
