@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Run publish-docker
         uses: lucenelletenebre/publish-docker@main
         with:
           docker-context: ./test

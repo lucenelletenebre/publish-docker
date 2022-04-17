@@ -2,28 +2,28 @@ name: 'publish-docker'
 description: 'create, tag and push docker container'
 inputs:
   
-  docker-context:  # id of input
+  docker-context:
     description: 'Dockerfile location'
     required: false
     default: .
 
-  docker-registry:  # id of input
+  docker-registry:
     description: 'Docker registry name'
     required: false
     default: ghcr.io
 
-  docker-platforms:  # id of input
+  docker-platforms:
     description: 'Docker platform for compilation'
     required: false
     default: linux/amd64,linux/arm64
 
-  docker-push:  # id of input
+  docker-push:
     description: 'Push to docker registry'
     required: false
     default: true
 
   docker-image:
-    description: 'complete docker image name'
+    description: 'Complete docker image name'
     required: true
 
   username:
@@ -31,7 +31,7 @@ inputs:
     required: true
 
   password:
-    description: 'password container registry'
+    description: 'Password container registry'
     required: true
 
 runs:
