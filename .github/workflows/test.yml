@@ -29,4 +29,9 @@ jobs:
           docker-image:  ghcr.io/lucenelletenebre/test
 
       - name: Print version number
-        run: echo ${{ steps.run-publish-docker.outputs.version-tag}}
+        run: |
+          MYTAG=${{ steps.run-publish-docker.outputs.version-tag}}
+          echo $MYTAG
+
+      - name: RUN "Hello world" container
+        run: docker run --rm ghcr.io/lucenelletenebre/test:latest
