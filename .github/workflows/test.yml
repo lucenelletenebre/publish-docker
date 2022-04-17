@@ -20,6 +20,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clean older unused docker images
+        uses: vlaurin/action-ghcr-prune@v0.4.0
+        with:
+          token: ${{ secrets.PAT }}
+          container: test
+          dry-run: false # Dry-run first, then change to `false`
+          older-than: 1 # days
+          keep-last: 0
+          untagged: true
+
       # run the action
       - name: Run publish-docker
         id: run-publish-docker
