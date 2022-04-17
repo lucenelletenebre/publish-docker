@@ -41,7 +41,7 @@ jobs:
       - name: Verify results
         uses: nick-fields/assert-action@v1
         with:
-          expected: Hello_World
+          expected: Hello_World_from_action
           actual: ${{ steps.test-data.outputs.value }}
           comparison: exact
       
