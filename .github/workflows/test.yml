@@ -28,14 +28,14 @@ jobs:
           token: ${{ secrets.PAT }}
           container: test
           dry-run: false # Dry-run first, then change to `false`
-          older-than: 0 # days
+          older-than: 1 # days
           keep-last: 0
           untagged: true
 
       # run the action
       - name: Run publish-docker
         id: run-publish-docker
-        uses: lucenelletenebre/publish-docker@main
+        uses: lucenelletenebre/publish-docker@${{ github.ref_name }}
         with:
           docker-context: ./test
           username: ${{ github.repository_owner }}
