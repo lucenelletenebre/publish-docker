@@ -33,5 +33,11 @@ jobs:
       #     MYTAG=${{ steps.run-publish-docker.outputs.version-tag}}
       #     echo $MYTAG
 
-      - name: RUN "Hello world" container
-        run: docker run --rm ghcr.io/lucenelletenebre/test:${{ env.TAGVERSION }}
+      # - name: RUN "Hello world" container
+      #   run: docker run --rm ghcr.io/lucenelletenebre/test:${{ env.TAGVERSION }}
+      - uses: nick-fields/assert-action@v1
+        with:
+          expected: Hello_World
+          actual: $(docker run --rm ghcr.io/lucenelletenebre/test:${{ env.TAGVERSION }})
+          comparison: exact
+      
