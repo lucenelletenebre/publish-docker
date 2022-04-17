@@ -58,7 +58,8 @@ jobs:
         if: success()
         id: test-data
         run: |
-          RES=$(docker run --rm ghcr.io/lucenelletenebre/test:${{ steps.run-publish-docker.outputs.version-tag}})
+          TAG=${{ steps.run-publish-docker.outputs.version-tag }}
+          RES=$(docker run --rm ghcr.io/lucenelletenebre/test:${TAG:1})
           echo "::set-output name=value::$RES"
       
       # verify that the container works as expected
