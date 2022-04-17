@@ -37,10 +37,15 @@ jobs:
         uses: EthanSK/git-branch-name-action@v1
       # output is env.GIT_BRANCH_NAME
 
+      - name: Show Branch name
+        run: |
+          echo ${{ env.GIT_BRANCH_NAME }}
+          echo ${{ github.ref_name }}
+
       # run the action
       - name: Run publish-docker
         id: run-publish-docker
-        uses: lucenelletenebre/publish-docker@${{ env.GIT_BRANCH_NAME }}
+        uses: lucenelletenebre/publish-docker@main
         with:
           docker-context: ./test
           username: ${{ github.repository_owner }}
