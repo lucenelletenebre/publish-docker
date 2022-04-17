@@ -1,0 +1,24 @@
+---
+name: Test Code Base
+
+on:
+  # push:
+  #   branches: [master, main]
+    # branches-ignore: [master, main]
+    # Remove the line above to run when pushing to master
+  # pull_request:
+  #   branches: [master, main]
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    # Name the Job
+    name: Lint Code Base
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: lucenelletenebre/publish-docker@main
+        
