@@ -1,0 +1,57 @@
+name: 'publish-docker'
+description: 'create, tag and push docker container'
+inputs:
+  docker-context:  # id of input
+    description: 'Dockerfile location'
+    required: false
+    default: .
+
+runs:
+  using: "composite"
+  steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get semver 2.0 Version tag
+        run: |
+          TAG=$(docker run --rm -v "$(pwd)":/git-semver mdomke/git-semver -no-meta)
+          echo "TAGVERSION=$TAG" >> "$GITHUB_ENV"
+          echo "$TAG"
+      
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ghcr.io/lucenelletenebre/fanfiction-cache-api
+          flavor: |
+            latest=true
+          tags: |
+            type=semver,pattern={{version}},value=${{ env.TAGVERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.TAGVERSION }}
+            type=semver,pattern={{major}},value=${{ env.TAGVERSION }}
+            type=ref,event=tag
+            type=sha,prefix=
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+    
+      - name: Login to Github Container
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build and push docker immage
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
