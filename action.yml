@@ -7,6 +7,25 @@ inputs:
     required: false
     default: .
 
+  docker-registry:  # id of input
+    description: 'Docker registry name'
+    required: false
+    default: ghcr.io
+
+  docker-platforms:  # id of input
+    description: 'Docker platform for compilation'
+    required: false
+    default: linux/amd64,linux/arm64
+
+  docker-push:  # id of input
+    description: 'Push to docker registry'
+    required: false
+    default: true
+
+  docker-image:
+    description: 'complete docker image name'
+    required: true
+
   username:
     description: 'Name of user for container registry'
     required: true
@@ -34,7 +53,7 @@ runs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ghcr.io/lucenelletenebre/fanfiction-cache-api
+          images: ${{ inputs.docker-image }}
           flavor: |
             latest=true
           tags: |
@@ -53,15 +72,15 @@ runs:
       - name: Login to Github Container
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
+          registry: ${{ inputs.docker-registry }}
           username: ${{ inputs.username }}
           password: ${{ inputs.password }}
       
       - name: Build and push docker immage
         uses: docker/build-push-action@v2
         with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
+          context: ${{ inputs.docker-context }}
+          platforms: ${{ inputs.docker-platforms }} 
+          push: ${{ inputs.docker-push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

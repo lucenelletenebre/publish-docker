@@ -22,5 +22,7 @@ jobs:
       - name: Checkout Code
         uses: lucenelletenebre/publish-docker@main
         with:
+          docker-context: ./test/Dockerfile
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          docker-image:  ghcr.io/lucenelletenebre/test
