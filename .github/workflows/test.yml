@@ -2,8 +2,8 @@
 name: Test Code Base
 
 on:
-  # push:
-  #   branches: [master, main]
+  push:
+    branches: [master, main]
     # branches-ignore: [master, main]
     # Remove the line above to run when pushing to master
   # pull_request:
