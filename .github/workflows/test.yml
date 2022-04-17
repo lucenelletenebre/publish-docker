@@ -20,13 +20,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # remove older unused images
       - name: Clean older unused docker images
         uses: vlaurin/action-ghcr-prune@v0.4.0
         with:
           token: ${{ secrets.PAT }}
           container: test
           dry-run: false # Dry-run first, then change to `false`
-          older-than: 1 # days
+          older-than: 0 # days
           keep-last: 0
           untagged: true
 
@@ -43,6 +45,7 @@ jobs:
 
       # download the just created and uploaded image
       - name: RUN "Hello world" container
+        if: success()
         id: test-data
         run: |
           RES=$(docker run --rm ghcr.io/lucenelletenebre/test:${{ steps.run-publish-docker.outputs.version-tag}})
@@ -50,6 +53,7 @@ jobs:
       
       # verify that the container works as expected
       - name: Verify results
+        if: success()
         uses: nick-fields/assert-action@v1
         with:
           expected: Hello_World_from_action
