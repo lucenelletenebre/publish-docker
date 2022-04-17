@@ -34,10 +34,10 @@ inputs:
     description: 'Password container registry'
     required: true
 
-# outputs:
-#   version-tag:
-#     description: "Generated SemVer tag"
-#     value: ${{ env.TAGVERSION }}
+outputs:
+  version-tag:
+    description: "Generated SemVer tag"
+    value: ${{ steps.get-semver.outputs.TAGVERSION }}
 
 runs:
   using: "composite"
@@ -48,10 +48,11 @@ runs:
           fetch-depth: 0
 
       - name: Get semver 2.0 Version tag
+        id: get-semver
         shell: bash
         run: |
           TAG=$(docker run --rm -v "$(pwd)":/git-semver mdomke/git-semver -no-meta)
-          echo "TAGVERSION=$TAG" >> "$GITHUB_ENV"
+          echo "::set-output name=TAGVERSION::$(echo $TAG)"
           echo "$TAG"
       
       - name: Docker meta
@@ -62,9 +63,9 @@ runs:
           flavor: |
             latest=true
           tags: |
-            type=semver,pattern={{version}},value=${{ env.TAGVERSION }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ env.TAGVERSION }}
-            type=semver,pattern={{major}},value=${{ env.TAGVERSION }}
+            type=semver,pattern={{version}},value=${{ steps.get-semver.outputs.TAGVERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.get-semver.outputs.TAGVERSION }}
+            type=semver,pattern={{major}},value=${{ steps.get-semver.outputs.TAGVERSION }}
             type=ref,event=tag
             type=sha,prefix=
       

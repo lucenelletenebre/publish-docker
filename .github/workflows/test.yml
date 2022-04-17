@@ -6,8 +6,8 @@ on:
     branches: [master, main]
     # branches-ignore: [master, main]
     # Remove the line above to run when pushing to master
-  # pull_request:
-  #   branches: [master, main]
+  pull_request:
+    branches: [master, main]
 
   workflow_dispatch:
 
@@ -36,7 +36,7 @@ jobs:
       - name: RUN "Hello world" container
         id: test-data
         run: |
-          RES=$(docker run --rm ghcr.io/lucenelletenebre/test:${{ env.TAGVERSION }})
+          RES=$(docker run --rm ghcr.io/lucenelletenebre/test:${{ steps.run-publish-docker.outputs.version-tag}})
           echo "::set-output name=value::$RES"
       
       - name: Verify results
