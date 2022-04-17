@@ -1,0 +1,13 @@
+---
+name: Generate Tags SemVer
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+jobs:
+  generate-tags:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: vweevers/additional-tags-action@v1
