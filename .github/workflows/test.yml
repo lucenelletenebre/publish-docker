@@ -6,9 +6,9 @@ on:
     branches: 
       - main
   
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 
   workflow_dispatch:
 
@@ -32,15 +32,15 @@ jobs:
           keep-last: 0
           untagged: true
       
-      # get the branch name that triggered the action
-      - name: Git branch name
-        uses: EthanSK/git-branch-name-action@v1
-      # output is env.GIT_BRANCH_NAME
+      # # get the branch name that triggered the action
+      # - name: Git branch name
+      #   uses: EthanSK/git-branch-name-action@v1
+      # # output is env.GIT_BRANCH_NAME
 
-      - name: Show Branch name
-        run: |
-          echo ${{ env.GIT_BRANCH_NAME }}
-          echo ${{ github.ref_name }}
+      # - name: Show Branch name
+      #   run: |
+      #     echo ${{ env.GIT_BRANCH_NAME }}
+      #     echo ${{ github.ref_name }}
 
       # run the action
       - name: Run publish-docker
