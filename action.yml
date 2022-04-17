@@ -34,6 +34,11 @@ inputs:
     description: 'Password container registry'
     required: true
 
+outputs:
+  version-tag:
+    description: "Generated SemVer tag"
+    value: ${{ env.TAGVERSION }}
+
 runs:
   using: "composite"
   steps:
