@@ -27,6 +27,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
           docker-image:  ghcr.io/lucenelletenebre/test
+          docker-platforms: linux/amd64
 
       # - name: Print version number
       #   run: |
