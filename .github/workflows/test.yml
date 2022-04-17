@@ -21,4 +21,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: lucenelletenebre/publish-docker@main
-        
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
