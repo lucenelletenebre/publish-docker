@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # run the action
       - name: Run publish-docker
         id: run-publish-docker
         uses: lucenelletenebre/publish-docker@main
@@ -29,17 +30,14 @@ jobs:
           docker-image:  ghcr.io/lucenelletenebre/test
           docker-platforms: linux/amd64
 
-      # - name: Print version number
-      #   run: |
-      #     MYTAG=${{ steps.run-publish-docker.outputs.version-tag}}
-      #     echo $MYTAG
-
+      # download the just created and uploaded image
       - name: RUN "Hello world" container
         id: test-data
         run: |
           RES=$(docker run --rm ghcr.io/lucenelletenebre/test:${{ steps.run-publish-docker.outputs.version-tag}})
           echo "::set-output name=value::$RES"
       
+      # verify that the container works as expected
       - name: Verify results
         uses: nick-fields/assert-action@v1
         with:
