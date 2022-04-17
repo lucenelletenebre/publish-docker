@@ -1,3 +1,5 @@
-FROM alpine:latest
+ARG VERSION=latest
 
-CMD echo "Hello_World_from_action"
+FROM alpine:${VERSION}
+
+CMD ["echo", "Hello_World_from_action"]
