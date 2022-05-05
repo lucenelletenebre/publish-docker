@@ -18,6 +18,7 @@ jobs:
           docker-registry: ghcr.io # OPTIONAL (docker registry)
           docker-platforms: linux/amd64,linux/arm64 # OPTIONAL (docker arch)
           docker-push: true # OPTIONAL (push image to registry)
+          docker-load: false # OPTIONAL (created immage is available in docker images)
           username: ${{ github.repository_owner }} # Docker repository username
           password: ${{ secrets.GITHUB_TOKEN }} # Docker repository password
           docker-image: ghcr.io/lucenelletenebre/test # Name of docker image
